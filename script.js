@@ -11,7 +11,7 @@ console.log(value)
 
 async function showResults(){
     value = searchBox.value
-    const pageUrl = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=Z9u2_OD8xHCKBGd4069Hll_tSaDaIzlee8yH8rR2zcE&per_page=12`
+    const pageUrl = `https://api.unsplash.com/search/photos?page=${page}&query=${value}&client_id=lwNP8nDc3kCSsB5iAltEx4FFZ-ZRwMEY4nAkLUdJz94&per_page=12`
     let response = await fetch(pageUrl)
     let  data = await  response.json()
     let imgUrls = data.results 
