@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        color: #333;
+        background-image: url(background-image.jpeg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .pomodoro-container {
+        margin: 100px auto;
+        width: 300px;
+        padding: 76px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    #timer-display {
+        font-size: 3rem;
+        margin: 20px 0;
+        font-weight: bold;
+    }
+
+    #session-type {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #3b409e;
+        color: white;
+    }
+</style>
+
+<body>
+    <div class="pomodoro-container">
+        <h1>Pomodoro Timer</h1>
+        <p id="session-type">Work Session</p> 
+        <div id="timer-display">25:00</div>
+        <div class="buttons">
+            <button id="start-btn">Start</button>
+            <button id="stop-btn">Stop</button>
+            <button id="reset-btn">Reset</button>
+        </div>
+    </div>
+
+    <script>
+        let workDuration = 25 * 60; 
+        let timeLeft = workDuration;
+        let timer = null;
+
+        const timerDisplay = document.getElementById("timer-display");
+        const startBtn = document.getElementById("start-btn");
+        const stopBtn = document.getElementById("stop-btn");
+        const resetBtn = document.getElementById("reset-btn");
+        const sessionType = document.getElementById("session-type"); 
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+        }
+
+        function startTimer() {
+            if (!timer) {
+                timer = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateDisplay();
+                    } else {
+                        clearInterval(timer);
+                        timer = null;
+                        sessionType.textContent = "Work Session Complete!";
+                        alert("Work Session Complete!");
+                    }
+                }, 1000);
+            }
+        }
+
+        function stopTimer() {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        }
+
+        function resetTimer() {
+            stopTimer();
+            timeLeft = workDuration; 
+            sessionType.textContent = "Work Session";
+            updateDisplay(); 
+        }
+
+       
+        startBtn.addEventListener("click", startTimer);
+        stopBtn.addEventListener("click", stopTimer);
+        resetBtn.addEventListener("click", resetTimer);
+
+        
+        updateDisplay();
+    </script>
+</body>
+
+</html>
